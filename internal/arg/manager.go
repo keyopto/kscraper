@@ -2,8 +2,8 @@ package arg
 
 import (
 	"errors"
+	"net/url"
 	"os"
-	"regexp"
 
 	"github.com/keyopto/kscraper/internal/types"
 )
@@ -21,16 +21,12 @@ func ParseArgs(arg *types.ArgumentCommand) error {
 
 	httpAddress := os.Args[1]
 
-	isValidHttp, err := regexp.Match(HTTP_REGEX, []byte(httpAddress))
+	parsedUrl, err := url.Parse(httpAddress)
 	if err != nil {
-		return err
-	}
-
-	if !isValidHttp {
 		return errors.New("Error : The argument is not a valid http address")
 	}
 
-	arg.HttpAddress = httpAddress
+	arg.HttpAddress = parsedUrl
 
 	return nil
 }

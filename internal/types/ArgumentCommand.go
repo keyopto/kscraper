@@ -1,5 +1,7 @@
 package types
 
+import "net/url"
+
 type ArgumentCommand struct {
-	HttpAddress string
+	HttpAddress *url.URL
 }
